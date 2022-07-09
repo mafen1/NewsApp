@@ -44,7 +44,6 @@ class ListNewsFragment : Fragment() {
                 newsAdapter.submitList(it)
                 log(newsAdapter.newsList.size.toString())
             }
-            newsAdapter.notifyDataSetChanged()
         }
     }
 }
