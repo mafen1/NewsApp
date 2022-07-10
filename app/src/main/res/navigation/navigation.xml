@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/listNewsFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/listNewsFragment"
         android:name="com.example.newsapp.screen.listNews.ListNewsFragment"
         android:label="fragment_list_news"
         tools:layout="@layout/fragment_list_news" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.newsapp.screen.splashScreen.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_listNewsFragment"
+            app:destination="@id/listNewsFragment" />
+    </fragment>
 </navigation>

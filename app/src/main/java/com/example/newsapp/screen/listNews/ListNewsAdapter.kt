@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.databinding.ListNewsItemBinding
-import com.example.notesapp.core.log
 
 class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(ItemComparator()) {
 
-     var newsList = listOf<ArticlesItem>()
+    var newsList = listOf<ArticlesItem>()
 
     inner class ViewHolder(private val binding: ListNewsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,12 +20,14 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
 
             binding.tvTitle.text = news.title
             binding.tvDescription.text = news.description
-            binding.tvSource.text = news.source.toString()
+            binding.tvSource.text = news.source?.name.toString()
             binding.tvDataTime.text = news.publishedAt
 
             Glide.with(binding.root)
                 .load(news.urlToImage)
                 .into(binding.imageView)
+
+
         }
     }
 
@@ -39,15 +40,15 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        log(newsList.size.toString())
         return ViewHolder(
             ListNewsItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) =
-        holder.bind(currentList[position])
+        holder.bind(newsList[position])
 
     override fun getItemCount(): Int = newsList.size
 }

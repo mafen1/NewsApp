@@ -7,7 +7,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
-    private val apiService: ApiService): RepositoryNews {
+    private val apiService: ApiService
+) : RepositoryNews {
 
     override suspend fun news(): Response<ResponseNews> = apiService.fetchNews()
 
