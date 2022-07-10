@@ -1,6 +1,9 @@
 package com.example.newsapp.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ResponseNews(
 
@@ -22,8 +25,12 @@ data class Source(
     @field:SerializedName("id")
     val id: String? = null
 )
-
+@Entity(tableName = "newsTable")
 data class ArticlesItem(
+
+    @field:SerializedName("id")
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null,
 
     @field:SerializedName("publishedAt")
     val publishedAt: String? = null,
@@ -48,4 +55,4 @@ data class ArticlesItem(
 
     @field:SerializedName("content")
     val content: String? = null
-)
+): Serializable

@@ -13,6 +13,8 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
 
     var newsList = listOf<ArticlesItem>()
 
+    var callBackPosition: ((news: ArticlesItem) -> Unit)? = null
+
     inner class ViewHolder(private val binding: ListNewsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -27,7 +29,9 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
                 .load(news.urlToImage)
                 .into(binding.imageView)
 
-
+            binding.root.setOnClickListener {
+                callBackPosition?.invoke( newsList[absoluteAdapterPosition])
+            }
         }
     }
 

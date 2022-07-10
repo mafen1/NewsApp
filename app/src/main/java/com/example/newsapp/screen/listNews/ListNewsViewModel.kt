@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.data.repository.RepositoryImpl
-import com.example.notesapp.core.log
+import com.example.newsapp.core.log
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

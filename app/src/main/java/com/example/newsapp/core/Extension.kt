@@ -1,4 +1,4 @@
-package com.example.notesapp.core
+package com.example.newsapp.core
 
 import android.util.Log
 import android.view.View

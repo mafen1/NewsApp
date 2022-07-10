@@ -1,9 +1,14 @@
 package com.example.newsapp.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.newsapp.data.api.ApiService
+import com.example.newsapp.data.cache.database.NewsDao
+import com.example.newsapp.data.cache.database.NewsDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,4 +33,14 @@ class AppModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideNewsDatabase( @ApplicationContext context: Context): NewsDatabase =
+        Room.databaseBuilder(context, NewsDatabase::class.java,"news_database")
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideNewsDao(newsDatabase: NewsDatabase) = newsDatabase.newsDao()
 }

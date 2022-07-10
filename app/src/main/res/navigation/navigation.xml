@@ -9,7 +9,17 @@
         android:id="@+id/listNewsFragment"
         android:name="com.example.newsapp.screen.listNews.ListNewsFragment"
         android:label="fragment_list_news"
-        tools:layout="@layout/fragment_list_news" />
+        tools:layout="@layout/fragment_list_news" >
+        <action
+            android:id="@+id/action_listNewsFragment_to_searchNewsFragment"
+            app:destination="@id/searchNewsFragment" />
+        <action
+            android:id="@+id/action_listNewsFragment_to_savedNewsFragment"
+            app:destination="@id/savedNewsFragment" />
+        <action
+            android:id="@+id/action_listNewsFragment_to_descriptionNewsFragment"
+            app:destination="@id/descriptionNewsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.newsapp.screen.splashScreen.SplashFragment"
@@ -18,5 +28,34 @@
         <action
             android:id="@+id/action_splashFragment_to_listNewsFragment"
             app:destination="@id/listNewsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchNewsFragment"
+        android:name="com.example.newsapp.screen.searchNews.SearchNewsFragment"
+        android:label="fragment_search_news"
+        tools:layout="@layout/fragment_search_news" >
+        <action
+            android:id="@+id/action_searchNewsFragment_to_listNewsFragment"
+            app:destination="@id/listNewsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedNewsFragment"
+        android:name="com.example.newsapp.screen.savedNews.SavedNewsFragment"
+        android:label="fragment_saved_news"
+        tools:layout="@layout/fragment_saved_news" >
+        <action
+            android:id="@+id/action_savedNewsFragment_to_listNewsFragment"
+            app:destination="@id/listNewsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/descriptionNewsFragment"
+        android:name="com.example.newsapp.screen.descriptionNews.DescriptionNewsFragment"
+        android:label="fragment_description_news"
+        tools:layout="@layout/fragment_description_news" >
+
+        <argument
+            android:name="article"
+            app:argType="com.example.newsapp.data.models.ArticlesItem"
+            />
     </fragment>
 </navigation>
