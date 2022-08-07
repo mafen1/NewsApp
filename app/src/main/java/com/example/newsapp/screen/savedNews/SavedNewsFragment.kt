@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
@@ -35,14 +36,33 @@ class SavedNewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
     }
-    private fun initView(){
+
+    private fun initView() {
 
         binding.bottomNavigationView.menu.findItem(R.id.listStar).isChecked = true
         binding.rvNews.adapter = savedNewsAdapter
 
+        binding.searchView.isSubmitButtonEnabled = true
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
 
-        viewModel.listNews2.observe(viewLifecycleOwner){
-            if (it != null){
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    log(newText)
+                    searchDatabase(newText)
+                }
+                return true
+            }
+
+        })
+
+
+        viewModel.listNews2.observe(viewLifecycleOwner) {
+            if (it != null) {
                 savedNewsAdapter.newsList = it
             }
         }
@@ -51,10 +71,21 @@ class SavedNewsFragment : Fragment() {
             when (it.itemId) {
                 R.id.listNews -> findNavController().navigate(R.id.action_savedNewsFragment_to_listNewsFragment)
                 R.id.listStar -> snackbar(binding.root, "Вы находитесь уже на данном экране")
-                R.id.listSearch -> findNavController().navigate(R.id.action_savedNewsFragment_to_searchNewsFragment)
+
             }
             true
         }
     }
 
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+
+        viewModel.searchNews(searchQuery)
+        viewModel.listNews1.observe(this) {
+            savedNewsAdapter.newsList = it
+            savedNewsAdapter.notifyDataSetChanged()
+        }
+
+
+    }
 }

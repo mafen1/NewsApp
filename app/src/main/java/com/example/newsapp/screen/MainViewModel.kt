@@ -55,7 +55,7 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             val temp = repositoryImpl.searchNews(searchQuery)
             log(temp.toString())
-            _listNews1.postValue(temp)
+            _listNews2.postValue(temp)
         }
     }
     private fun news() {

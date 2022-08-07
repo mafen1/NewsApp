@@ -81,15 +81,7 @@ class SearchNewsFragment : Fragment() {
         }
     }
 
-    private fun searchDatabase(query: String) {
-        val searchQuery = "%$query%"
-
-        viewModel.searchNews(query)
-        viewModel.listNews2.observe(this) {
-            adapter.newsList = it
-            adapter.notifyDataSetChanged()
-        }
-    }
+   }
 
 
 }
