@@ -17,24 +17,5 @@ class ListNewsViewModel @Inject constructor(
     private val repositoryImpl: RepositoryImpl
 ) : ViewModel() {
 
-    private var _listNews = MutableLiveData<List<ArticlesItem>>()
-    var listNews: LiveData<List<ArticlesItem>> = _listNews
 
-    init {
-        news()
-    }
-
-    private fun news() {
-        viewModelScope.launch(Dispatchers.IO) {
-            //todo переименовать переменную
-            val a = repositoryImpl.news()
-            if (a.isSuccessful) {
-                a.body()?.articles.let {
-                    _listNews.postValue(it)
-                }
-            } else {
-                log("error")
-            }
-        }
-    }
 }

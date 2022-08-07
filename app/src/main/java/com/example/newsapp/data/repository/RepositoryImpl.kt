@@ -21,4 +21,6 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun deleteNews() = newsDao.deleteNews()
 
+    override suspend fun searchNews(searchQuery: String): List<ArticlesItem> = newsDao.searchNews(searchQuery)
+
 }

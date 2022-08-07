@@ -17,17 +17,27 @@ class MainViewModel @Inject constructor(
     private val repositoryImpl: RepositoryImpl
 ) : ViewModel() {
 
-    private var _listSavedNews = MutableLiveData<MutableList<ArticlesItem>>()
-    var listSavedNews: LiveData<MutableList<ArticlesItem>> = _listSavedNews
+    private var _listNews = MutableLiveData<MutableList<ArticlesItem>>()
+    var listNews: LiveData<MutableList<ArticlesItem>> = _listNews
+
+    // todo rename variables
+
+    private var _listNews1 = MutableLiveData<List<ArticlesItem>>()
+    var listNews1: LiveData<List<ArticlesItem>> = _listNews1
+
+    private var _listNews2 = MutableLiveData<List<ArticlesItem>>()
+    var listNews2: LiveData<List<ArticlesItem>> = _listNews2
+
 
     init {
+        news()
         getSavedNews()
     }
 
     fun getSavedNews() {
         viewModelScope.launch(Dispatchers.IO) {
             val tempNews = repositoryImpl.getNews()
-            _listSavedNews.postValue(tempNews)
+            _listNews.postValue(tempNews)
         }
     }
 
@@ -39,6 +49,26 @@ class MainViewModel @Inject constructor(
     fun deleteNews(){
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.deleteNews()
+        }
+    }
+    fun searchNews(searchQuery: String){
+        viewModelScope.launch {
+            val temp = repositoryImpl.searchNews(searchQuery)
+            log(temp.toString())
+            _listNews1.postValue(temp)
+        }
+    }
+    private fun news() {
+        viewModelScope.launch(Dispatchers.IO) {
+            //todo переименовать переменную
+            val a = repositoryImpl.news()
+            if (a.isSuccessful) {
+                a.body()?.articles.let {
+                    _listNews2.postValue(it)
+                }
+            } else {
+                log("error")
+            }
         }
     }
 }

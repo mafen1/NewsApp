@@ -10,7 +10,9 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
+import com.example.newsapp.core.snackbar
 import com.example.newsapp.databinding.FragmentListNewsBinding
+import com.example.newsapp.screen.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -18,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ListNewsFragment : Fragment() {
 
     lateinit var binding: FragmentListNewsBinding
-    private val viewModel by viewModels<ListNewsViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
     private val newsAdapter = ListNewsAdapter()
 
     override fun onCreateView(
@@ -40,12 +42,14 @@ class ListNewsFragment : Fragment() {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
+                R.id.listNews -> snackbar(binding.root, "Вы находитесь уже на данном экране")
                 R.id.listStar -> findNavController().navigate(R.id.action_listNewsFragment_to_savedNewsFragment)
+                R.id.listSearch -> findNavController().navigate(R.id.action_listNewsFragment_to_searchNewsFragment)
             }
             true
         }
 
-        viewModel.listNews.observe(viewLifecycleOwner) {
+        viewModel.listNews2.observe(viewLifecycleOwner) {
             if (it != null) {
                 newsAdapter.newsList = it
             }

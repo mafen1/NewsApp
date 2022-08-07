@@ -9,9 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.core.log
+import com.example.newsapp.core.snackbar
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
 import com.example.newsapp.screen.MainActivity
-import com.example.newsapp.screen.descriptionNews.DescriptionNewsViewModel
+import com.example.newsapp.screen.MainViewModel
 import com.example.newsapp.screen.listNews.ListNewsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class SavedNewsFragment : Fragment() {
     lateinit var binding: FragmentSavedNewsBinding
     private val savedNewsAdapter = ListNewsAdapter()
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,22 +36,25 @@ class SavedNewsFragment : Fragment() {
         initView()
     }
     private fun initView(){
-        val viewModel = (activity as MainActivity).viewModel
+
         binding.bottomNavigationView.menu.findItem(R.id.listStar).isChecked = true
         binding.rvNews.adapter = savedNewsAdapter
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.listNews -> findNavController().navigate(R.id.action_savedNewsFragment_to_listNewsFragment)
-                R.id.listStar -> findNavController().navigate(R.id.action_listNewsFragment_to_savedNewsFragment)
-                R.id.listSearch -> viewModel.deleteNews()
-            }
-            true
-        }
-        viewModel.listSavedNews.observe(viewLifecycleOwner){
+
+
+        viewModel.listNews2.observe(viewLifecycleOwner){
             if (it != null){
-                log(it.toString())
                 savedNewsAdapter.newsList = it
             }
         }
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.listNews -> findNavController().navigate(R.id.action_savedNewsFragment_to_listNewsFragment)
+                R.id.listStar -> snackbar(binding.root, "Вы находитесь уже на данном экране")
+                R.id.listSearch -> findNavController().navigate(R.id.action_savedNewsFragment_to_searchNewsFragment)
+            }
+            true
+        }
     }
+
 }

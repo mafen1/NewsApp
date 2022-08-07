@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.newsapp.core.log
 import com.example.newsapp.screen.MainActivity
 import com.example.newsapp.databinding.FragmentDescriptionNewsBinding
+import com.example.newsapp.screen.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,6 +22,8 @@ class DescriptionNewsFragment : Fragment() {
 
     lateinit var binding: FragmentDescriptionNewsBinding
     private val saveArgs: DescriptionNewsFragmentArgs by navArgs()
+    private val viewModel by viewModels<MainViewModel>()
+
 
 
     override fun onCreateView(
@@ -38,7 +41,6 @@ class DescriptionNewsFragment : Fragment() {
     }
 
     private fun initView() {
-        val viewModel = (activity as MainActivity).viewModel
         val article = saveArgs.article
         log(article.toString())
         val supportActionBar = (activity as MainActivity?)?.supportActionBar
