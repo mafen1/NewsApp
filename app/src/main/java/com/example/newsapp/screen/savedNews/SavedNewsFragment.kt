@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.core.log
 import com.example.newsapp.core.snackbar
+import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
 import com.example.newsapp.screen.MainActivity
 import com.example.newsapp.screen.MainViewModel
@@ -19,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SavedNewsFragment : Fragment() {
+
     lateinit var binding: FragmentSavedNewsBinding
     private val savedNewsAdapter = ListNewsAdapter()
     private val viewModel by viewModels<MainViewModel>()
@@ -52,7 +56,7 @@ class SavedNewsFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText != null) {
-                    log(newText)
+
                     searchDatabase(newText)
                 }
                 return true
@@ -61,10 +65,11 @@ class SavedNewsFragment : Fragment() {
         })
 
 
-        viewModel.listNews2.observe(viewLifecycleOwner) {
+        viewModel.listNews.observe(viewLifecycleOwner) {
             if (it != null) {
                 savedNewsAdapter.newsList = it
             }
+            savedNewsAdapter.notifyDataSetChanged()
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -81,7 +86,7 @@ class SavedNewsFragment : Fragment() {
         val searchQuery = "%$query%"
 
         viewModel.searchNews(searchQuery)
-        viewModel.listNews1.observe(this) {
+        viewModel.listNews2.observe(this) {
             savedNewsAdapter.newsList = it
             savedNewsAdapter.notifyDataSetChanged()
         }

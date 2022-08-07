@@ -28,6 +28,9 @@ class MainViewModel @Inject constructor(
     private var _listNews2 = MutableLiveData<List<ArticlesItem>>()
     var listNews2: LiveData<List<ArticlesItem>> = _listNews2
 
+    private var _listNews3 = MutableLiveData<List<ArticlesItem>>()
+    var listNews3: LiveData<List<ArticlesItem>> = _listNews3
+
 
     init {
         news()

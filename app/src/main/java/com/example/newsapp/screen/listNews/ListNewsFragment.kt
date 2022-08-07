@@ -10,6 +10,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
+import com.example.newsapp.core.log
 import com.example.newsapp.core.snackbar
 import com.example.newsapp.databinding.FragmentListNewsBinding
 import com.example.newsapp.screen.MainViewModel
@@ -44,7 +45,6 @@ class ListNewsFragment : Fragment() {
             when (it.itemId) {
                 R.id.listNews -> snackbar(binding.root, "Вы находитесь уже на данном экране")
                 R.id.listStar -> findNavController().navigate(R.id.action_listNewsFragment_to_savedNewsFragment)
-                R.id.listSearch -> findNavController().navigate(R.id.action_listNewsFragment_to_searchNewsFragment)
             }
             true
         }

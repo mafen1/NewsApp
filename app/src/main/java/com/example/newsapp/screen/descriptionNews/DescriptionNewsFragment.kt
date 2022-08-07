@@ -42,7 +42,7 @@ class DescriptionNewsFragment : Fragment() {
 
     private fun initView() {
         val article = saveArgs.article
-        log(article.toString())
+
         val supportActionBar = (activity as MainActivity?)?.supportActionBar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
