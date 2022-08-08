@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ListNewsFragment : Fragment() {
 
-    lateinit var binding: FragmentListNewsBinding
+    private lateinit var binding: FragmentListNewsBinding
     private val viewModel by viewModels<MainViewModel>()
     private val newsAdapter = ListNewsAdapter()
 

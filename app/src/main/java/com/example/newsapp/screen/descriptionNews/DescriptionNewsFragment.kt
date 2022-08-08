@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DescriptionNewsFragment : Fragment() {
 
-    lateinit var binding: FragmentDescriptionNewsBinding
+    private lateinit var binding: FragmentDescriptionNewsBinding
     private val saveArgs: DescriptionNewsFragmentArgs by navArgs()
     private val viewModel by viewModels<MainViewModel>()
 

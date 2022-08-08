@@ -29,10 +29,10 @@ class MainViewModel @Inject constructor(
 
     init {
         news()
-        getSavedNews()
+        savedNews()
     }
 
-    fun getSavedNews() {
+    private fun savedNews() {
         viewModelScope.launch(Dispatchers.IO) {
             val tempNews = repositoryImpl.getNews()
             _listSavedNews.postValue(tempNews)
@@ -45,7 +45,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun deleteNews(articlesItem: ArticlesItem) {
+    private fun deleteNews(articlesItem: ArticlesItem) {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.deleteNews(articlesItem)
         }

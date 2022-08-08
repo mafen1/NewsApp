@@ -92,7 +92,9 @@ class SavedNewsFragment : Fragment() {
             }
         }
 
-        val helper = ItemTouchHelper(callBack).attachToRecyclerView(binding.rvNews)
+        ItemTouchHelper(callBack).apply {
+            attachToRecyclerView(binding.rvNews)
+        }
     }
 
     private fun searchDatabase(query: String) {
