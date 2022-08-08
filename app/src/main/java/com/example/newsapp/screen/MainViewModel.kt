@@ -77,19 +77,17 @@ class MainViewModel @Inject constructor(
         savedNewsAdapter: ListNewsAdapter,
         binding: FragmentSavedNewsBinding
     ) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val position = viewHolder.absoluteAdapterPosition
-            val article = savedNewsAdapter.newsList[position]
-            deleteNews(article)
-            savedNewsAdapter.newsList.remove(article)
-            savedNewsAdapter.notifyDataSetChanged()
-            Snackbar.make(binding.root, "successful deletion", Snackbar.LENGTH_LONG).apply {
-                setAction("Undo") {
-                    saveNews(article)
-                    savedNewsAdapter.newsList.add(article)
-                    savedNewsAdapter.notifyDataSetChanged()
-                }
-            }.show()
-        }
+        val position = viewHolder.absoluteAdapterPosition
+        val article = savedNewsAdapter.newsList[position]
+        deleteNews(article)
+        savedNewsAdapter.newsList.remove(article)
+        savedNewsAdapter.notifyDataSetChanged()
+        Snackbar.make(binding.root, "successful deletion", Snackbar.LENGTH_LONG).apply {
+            setAction("Undo") {
+                saveNews(article)
+                savedNewsAdapter.newsList.add(article)
+                savedNewsAdapter.notifyDataSetChanged()
+            }
+        }.show()
     }
 }
