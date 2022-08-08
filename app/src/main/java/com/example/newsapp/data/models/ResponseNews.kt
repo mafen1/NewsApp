@@ -25,6 +25,7 @@ data class Source(
     @field:SerializedName("id")
     val id: String? = null
 )
+
 @Entity(tableName = "newsTable")
 data class ArticlesItem(
 
@@ -55,4 +56,4 @@ data class ArticlesItem(
 
     @field:SerializedName("content")
     val content: String? = null
-): Serializable
+) : Serializable

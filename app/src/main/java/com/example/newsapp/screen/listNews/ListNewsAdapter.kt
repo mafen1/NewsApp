@@ -3,11 +3,9 @@ package com.example.newsapp.screen.listNews
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.newsapp.core.log
 import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.databinding.ListNewsItemBinding
 
@@ -19,7 +17,7 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
 
     inner class ViewHolder(
         private val binding: ListNewsItemBinding
-        ) :
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(news: ArticlesItem) {
@@ -34,7 +32,7 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
                 .into(binding.imageView)
 
             binding.root.setOnClickListener {
-                callBackPosition?.invoke( newsList[absoluteAdapterPosition])
+                callBackPosition?.invoke(newsList[absoluteAdapterPosition])
             }
         }
 

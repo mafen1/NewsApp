@@ -1,6 +1,5 @@
 package com.example.newsapp.data.cache.database
 
-import androidx.room.Dao
 import androidx.room.*
 import com.example.newsapp.data.models.ArticlesItem
 

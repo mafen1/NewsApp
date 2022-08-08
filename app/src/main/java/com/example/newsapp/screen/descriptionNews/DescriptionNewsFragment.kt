@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.example.newsapp.core.log
-import com.example.newsapp.screen.MainActivity
 import com.example.newsapp.databinding.FragmentDescriptionNewsBinding
+import com.example.newsapp.screen.MainActivity
 import com.example.newsapp.screen.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -23,7 +22,6 @@ class DescriptionNewsFragment : Fragment() {
     lateinit var binding: FragmentDescriptionNewsBinding
     private val saveArgs: DescriptionNewsFragmentArgs by navArgs()
     private val viewModel by viewModels<MainViewModel>()
-
 
 
     override fun onCreateView(
@@ -47,22 +45,22 @@ class DescriptionNewsFragment : Fragment() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-            binding.webView.apply {
+        binding.webView.apply {
 
-                webViewClient = WebViewClient()
+            webViewClient = WebViewClient()
 
-                lifecycleScope.launch{
-                    binding.apply {
-                        webView.loadUrl(article.url!!)
-                        webView.visibility = View.GONE
-                        floatingActionButton.visibility = View.GONE
-                        delay(2000)
-                        webView.visibility = View.VISIBLE
-                        floatingActionButton.visibility = View.VISIBLE
-                        progressBar2.visibility = View.GONE
-                    }
+            lifecycleScope.launch {
+                binding.apply {
+                    webView.loadUrl(article.url!!)
+                    webView.visibility = View.GONE
+                    floatingActionButton.visibility = View.GONE
+                    delay(2000)
+                    webView.visibility = View.VISIBLE
+                    floatingActionButton.visibility = View.VISIBLE
+                    progressBar2.visibility = View.GONE
                 }
             }
+        }
 
         binding.floatingActionButton.setOnClickListener {
             viewModel.saveNews(article)
