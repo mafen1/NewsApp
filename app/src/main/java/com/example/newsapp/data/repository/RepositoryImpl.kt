@@ -6,7 +6,6 @@ import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.data.models.ResponseNews
 import com.example.newsapp.domain.repository.RepositoryNews
 import retrofit2.Response
-import java.net.IDN
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -18,7 +17,7 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun addNews(articlesItem: ArticlesItem) = newsDao.addNews(articlesItem)
 
-    override suspend fun getNews(): MutableList<ArticlesItem> = newsDao.getNews()
+    override suspend fun getNews(): MutableList<ArticlesItem> = newsDao.news()
 
     override suspend fun deleteNews(article: ArticlesItem) = newsDao.deleteNews(article)
 

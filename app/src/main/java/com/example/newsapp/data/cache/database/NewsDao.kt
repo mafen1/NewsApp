@@ -11,7 +11,7 @@ interface NewsDao {
     suspend fun addNews(articlesItem: ArticlesItem)
 
     @Query("SELECT * FROM newsTable")
-    suspend fun getNews(): MutableList<ArticlesItem>
+    suspend fun news(): MutableList<ArticlesItem>
 
     @Delete
     suspend fun deleteNews(article: ArticlesItem)

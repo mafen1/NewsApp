@@ -47,9 +47,6 @@ class DescriptionNewsFragment : Fragment() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-
-
-
             binding.webView.apply {
 
                 webViewClient = WebViewClient()

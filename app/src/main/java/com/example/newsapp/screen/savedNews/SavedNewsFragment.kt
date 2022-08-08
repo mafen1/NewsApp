@@ -15,7 +15,6 @@ import com.example.newsapp.core.snackbar
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
 import com.example.newsapp.screen.MainViewModel
 import com.example.newsapp.screen.listNews.ListNewsAdapter
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -100,7 +99,7 @@ class SavedNewsFragment : Fragment() {
         val searchQuery = "%$query%"
 
         viewModel.searchNews(searchQuery)
-        viewModel.listNews2.observe(this) {
+        viewModel.listNews.observe(this) {
             savedNewsAdapter.newsList = it
             savedNewsAdapter.notifyDataSetChanged()
         }
