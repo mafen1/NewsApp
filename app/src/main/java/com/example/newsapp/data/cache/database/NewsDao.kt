@@ -13,10 +13,10 @@ interface NewsDao {
     @Query("SELECT * FROM newsTable")
     suspend fun getNews(): MutableList<ArticlesItem>
 
-    @Query("DELETE FROM newsTable")
-    suspend fun deleteNews()
+    @Delete
+    suspend fun deleteNews(article: ArticlesItem)
 
     @Query("Select * from newsTable where title like :searchQuery or description like :searchQuery COLLATE NOCASE")
-    suspend fun searchNews(searchQuery: String): List<ArticlesItem>
+    suspend fun searchNews(searchQuery: String): MutableList<ArticlesItem>
 
 }

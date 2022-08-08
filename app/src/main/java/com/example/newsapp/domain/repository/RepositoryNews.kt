@@ -8,6 +8,6 @@ interface RepositoryNews {
     suspend fun news(): Response<ResponseNews>
     suspend fun addNews(articlesItem: ArticlesItem)
     suspend fun getNews(): List<ArticlesItem>
-    suspend fun deleteNews()
-    suspend fun searchNews(searchQuery: String): List<ArticlesItem>
+    suspend fun deleteNews(article: ArticlesItem)
+    suspend fun searchNews(searchQuery: String): MutableList<ArticlesItem>
 }

@@ -1,23 +1,21 @@
 package com.example.newsapp.screen.savedNews
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
-import com.example.newsapp.core.log
 import com.example.newsapp.core.snackbar
-import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
-import com.example.newsapp.screen.MainActivity
 import com.example.newsapp.screen.MainViewModel
 import com.example.newsapp.screen.listNews.ListNewsAdapter
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -80,6 +78,22 @@ class SavedNewsFragment : Fragment() {
             }
             true
         }
+
+        val callBack = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                viewModel.deleteSavedNews(viewHolder, savedNewsAdapter, binding)
+            }
+        }
+
+        val helper = ItemTouchHelper(callBack).attachToRecyclerView(binding.rvNews)
     }
 
     private fun searchDatabase(query: String) {
@@ -90,7 +104,7 @@ class SavedNewsFragment : Fragment() {
             savedNewsAdapter.newsList = it
             savedNewsAdapter.notifyDataSetChanged()
         }
-
-
     }
+
+
 }

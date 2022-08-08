@@ -6,6 +6,7 @@ import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.data.models.ResponseNews
 import com.example.newsapp.domain.repository.RepositoryNews
 import retrofit2.Response
+import java.net.IDN
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
@@ -19,8 +20,8 @@ class RepositoryImpl @Inject constructor(
 
     override suspend fun getNews(): MutableList<ArticlesItem> = newsDao.getNews()
 
-    override suspend fun deleteNews() = newsDao.deleteNews()
+    override suspend fun deleteNews(article: ArticlesItem) = newsDao.deleteNews(article)
 
-    override suspend fun searchNews(searchQuery: String): List<ArticlesItem> = newsDao.searchNews(searchQuery)
+    override suspend fun searchNews(searchQuery: String): MutableList<ArticlesItem> = newsDao.searchNews(searchQuery)
 
 }

@@ -3,19 +3,23 @@ package com.example.newsapp.screen.listNews
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.newsapp.core.log
 import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.databinding.ListNewsItemBinding
 
 class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(ItemComparator()) {
 
-    var newsList = listOf<ArticlesItem>()
+    var newsList = mutableListOf<ArticlesItem>()
 
     var callBackPosition: ((news: ArticlesItem) -> Unit)? = null
 
-    inner class ViewHolder(private val binding: ListNewsItemBinding) :
+    inner class ViewHolder(
+        private val binding: ListNewsItemBinding
+        ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(news: ArticlesItem) {
@@ -32,7 +36,24 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
             binding.root.setOnClickListener {
                 callBackPosition?.invoke( newsList[absoluteAdapterPosition])
             }
+
+            val callBack = object : ItemTouchHelper.SimpleCallback(0,  ItemTouchHelper.RIGHT){
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    callBackPosition?.invoke( newsList[absoluteAdapterPosition])
+                    log(news.id.toString())
+                }
+            }
+            val helper = ItemTouchHelper(callBack)
         }
+
     }
 
     class ItemComparator : DiffUtil.ItemCallback<ArticlesItem>() {
