@@ -44,17 +44,20 @@ class MainViewModel @Inject constructor(
             repositoryImpl.addNews(articlesItem)
         }
     }
-    fun deleteNews(articlesItem: ArticlesItem){
+
+    fun deleteNews(articlesItem: ArticlesItem) {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.deleteNews(articlesItem)
         }
     }
-    fun searchNews(searchQuery: String){
+
+    fun searchNews(searchQuery: String) {
         viewModelScope.launch {
             val temp = repositoryImpl.searchNews(searchQuery)
             _listNews.postValue(temp)
         }
     }
+
     private fun news() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = repositoryImpl.news()
