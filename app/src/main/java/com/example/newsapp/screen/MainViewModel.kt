@@ -11,6 +11,7 @@ import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.data.repository.RepositoryImpl
 import com.example.newsapp.databinding.FragmentSavedNewsBinding
 import com.example.newsapp.screen.listNews.ListNewsAdapter
+import com.example.newsapp.screen.savedNews.NewsSavedAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _listSavedNews = MutableLiveData<MutableList<ArticlesItem>>()
+    var listSavesNews : LiveData<MutableList<ArticlesItem>> = _listSavedNews
 
     private var _listNews = MutableLiveData<MutableList<ArticlesItem>>()
     var listNews: LiveData<MutableList<ArticlesItem>> = _listNews
@@ -42,12 +44,14 @@ class MainViewModel @Inject constructor(
     fun saveNews(articlesItem: ArticlesItem) {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.addNews(articlesItem)
+            savedNews()
         }
     }
 
     private fun deleteNews(articlesItem: ArticlesItem) {
         viewModelScope.launch(Dispatchers.IO) {
             repositoryImpl.deleteNews(articlesItem)
+            savedNews()
         }
     }
 
@@ -74,19 +78,17 @@ class MainViewModel @Inject constructor(
     @SuppressLint("NotifyDataSetChanged")
     fun deleteSavedNews(
         viewHolder: RecyclerView.ViewHolder,
-        savedNewsAdapter: ListNewsAdapter,
+        savedNewsAdapter: NewsSavedAdapter,
         binding: FragmentSavedNewsBinding
     ) {
         val position = viewHolder.absoluteAdapterPosition
-        val article = savedNewsAdapter.newsList[position]
+        val article = savedNewsAdapter.currentList[position]
         deleteNews(article)
-        savedNewsAdapter.newsList.remove(article)
-        savedNewsAdapter.notifyDataSetChanged()
+        savedNewsAdapter.submitList(_listSavedNews.value)
         Snackbar.make(binding.root, "successful deletion", Snackbar.LENGTH_LONG).apply {
             setAction("Undo") {
                 saveNews(article)
-                savedNewsAdapter.newsList.add(article)
-                savedNewsAdapter.notifyDataSetChanged()
+                savedNewsAdapter.submitList(_listSavedNews.value)
             }
         }.show()
     }

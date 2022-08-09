@@ -15,7 +15,7 @@ interface NewsDao {
     @Delete
     suspend fun deleteNews(article: ArticlesItem)
 
-    @Query("Select * from newsTable where title like :searchQuery or description like :searchQuery COLLATE NOCASE")
+    @Query("SELECT * FROM newsTable WHERE title LIKE :searchQuery OR description LIKE :searchQuery COLLATE NOCASE")
     suspend fun searchNews(searchQuery: String): MutableList<ArticlesItem>
 
 }

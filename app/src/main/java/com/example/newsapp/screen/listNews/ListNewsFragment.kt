@@ -10,32 +10,20 @@ import androidx.navigation.fragment.findNavController
 import com.example.newsapp.R
 import com.example.newsapp.core.snackbar
 import com.example.newsapp.databinding.FragmentListNewsBinding
+import com.example.newsapp.databinding.FragmentSavedNewsBinding
+import com.example.newsapp.screen.BaseFragment
 import com.example.newsapp.screen.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ListNewsFragment : Fragment() {
+class ListNewsFragment : BaseFragment<FragmentListNewsBinding>(FragmentListNewsBinding::inflate) {
 
-    private lateinit var binding: FragmentListNewsBinding
     private val viewModel by viewModels<MainViewModel>()
     private val newsAdapter = ListNewsAdapter()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentListNewsBinding.inflate(layoutInflater, container, false)
-        return binding.root
-    }
+    override fun initView() {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-        initData()
-    }
-
-    private fun initView() {
         binding.rvNews.adapter = newsAdapter
 
         binding.bottomNavigationView.setOnItemSelectedListener {
@@ -48,17 +36,15 @@ class ListNewsFragment : Fragment() {
 
         viewModel.listNews.observe(viewLifecycleOwner) {
             if (it != null) {
-                newsAdapter.newsList = it
+                newsAdapter.submitList(it)
             }
-            newsAdapter.notifyDataSetChanged()
         }
-    }
 
-    private fun initData() {
         newsAdapter.callBackPosition = { news ->
             findNavController().navigate(
                 ListNewsFragmentDirections.actionListNewsFragmentToDescriptionNewsFragment(news)
             )
         }
     }
+
 }

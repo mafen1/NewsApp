@@ -1,6 +1,5 @@
-package com.example.newsapp.screen.listNews
+package com.example.newsapp.screen.savedNews
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,11 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.data.models.ArticlesItem
 import com.example.newsapp.databinding.ListNewsItemBinding
+import com.example.newsapp.screen.listNews.ListNewsAdapter
 
-@SuppressLint("NotifyDataSetChanged")
-class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(ItemComparator()) {
-
-    var callBackPosition: ((news: ArticlesItem) -> Unit)? = null
+class NewsSavedAdapter: ListAdapter<ArticlesItem, NewsSavedAdapter.ViewHolder>(ItemComparator()) {
 
     inner class ViewHolder(
         private val binding: ListNewsItemBinding
@@ -31,7 +28,7 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
                 .load(news.urlToImage)
                 .into(binding.imageView)
 
-            root.setOnClickListener {callBackPosition?.invoke(news)}
+
 
         }
 
@@ -53,7 +50,10 @@ class ListNewsAdapter : ListAdapter<ArticlesItem, ListNewsAdapter.ViewHolder>(It
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+
 
 }
